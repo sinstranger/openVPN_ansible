@@ -1,0 +1,13 @@
+---
+# Run this playbook after server_playbook.yml to create new client config
+# to pass client name run command:
+# ansible-playbook create_client_playbook.yml --extra-vars "client_name=< client_name >"
+
+- hosts: all
+  vars_files:
+    - open_vpn_server.vars.yml
+  become: true
+  tasks:
+    - import_tasks: tasks/create_new_client.tasks.yml
+
+...

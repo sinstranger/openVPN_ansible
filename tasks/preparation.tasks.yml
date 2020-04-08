@@ -1,0 +1,28 @@
+---
+
+- name: Install required packages
+  apt:
+    pkg:
+      - zip
+      - openvpn
+      - ufw
+
+- name: Create easy-rsa origin directory
+  file:
+    path: "{{ easy_rsa_origin_directory }}"
+    state: directory
+    mode: 0755
+
+- name: Download easy-rsa
+  get_url:
+    url: https://github.com/OpenVPN/easy-rsa/archive/master.zip
+    dest: "{{ easy_rsa_origin_file }}"
+    remote_src: yes
+
+- name: Create server.conf file
+  template:
+    src: templates/server.conf.j2
+    dest:  /etc/openvpn/server.conf
+    mode: '0755'
+
+...

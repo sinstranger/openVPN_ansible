@@ -1,0 +1,30 @@
+---
+
+- name: Check is server alredy registered in CA
+  stat:
+    path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/reqs/vpn-server.req"
+  register: server_registered
+
+- name: Register server in CA
+  shell:
+    cmd: "./easyrsa import-req {{ openvpn_server_request_file_path }} {{ openvpn_server_name }}"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  when: server_registered.stat.isreg is not defined
+
+- name: Check is cert request already signed
+  stat:
+    path: "{{ openvpn_server_signed_sertificate_file_path }}"
+  register: server_cert
+
+- name: Sign server request
+  shell:
+    cmd: "./easyrsa sign-req server {{ openvpn_server_name }}"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  environment:
+    EASYRSA_BATCH: 1
+  when: server_cert.stat.isreg is not defined
+
+
+
+
+...

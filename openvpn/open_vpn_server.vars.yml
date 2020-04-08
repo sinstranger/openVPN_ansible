@@ -1,0 +1,19 @@
+---
+
+openvpn_root_path: "/openvpn"
+openvpn_ca_path: "{{ openvpn_root_path }}/ca"
+openvpn_server_path: "{{ openvpn_root_path }}/server"
+openvpn_daemon_path:  /etc/openvpn
+
+
+openvpn_ca_certificate_file_path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/ca.crt"
+openvpn_ca_crl_file_path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/crl.pem"
+
+
+openvpn_server_name: vpn-server
+openvpn_server_request_file_path: "{{ openvpn_server_path }}/easy-rsa-master/easyrsa3/pki/reqs/server.req"
+openvpn_server_signed_sertificate_file_path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/issued/vpn-server.crt"
+openvpn_server_diffie_hellman_file_path: "{{ openvpn_server_path }}/easy-rsa-master/easyrsa3/pki/dh.pem"
+openvpn_server_private_key_file_path: "{{ openvpn_server_path }}/easy-rsa-master/easyrsa3/pki/private/server.key"
+
+...

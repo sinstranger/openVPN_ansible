@@ -1,0 +1,40 @@
+---
+
+- name: Client - Create client infrastructure directory
+  file:
+    path: "{{ client_infrastructure_path }}"
+    state: directory
+    mode: 0755
+
+- name: Client - Create client files directory
+  file:
+    path: "{{ client_files_path }}"
+    state: directory
+    mode: 0755
+
+- name: Client - Create client keys directory
+  file:
+    path: "{{ client_keys_path }}"
+    state: directory
+    mode: 0755
+
+- name: Client - Create base client config
+  template:
+    src: templates/client_base.conf.j2
+    dest:  "{{ client_infrastructure_path }}/base.conf"
+
+- name: Client - Copy make_config shell script
+  template:
+    src: templates/make_config.sh.j2
+    dest:  "{{ client_infrastructure_path }}/make_config.sh"
+    mode: 0700
+
+- name: Client - copy ca.crt to client files
+  shell:
+    cmd: "cp {{ openvpn_ca_certificate_file_path }} {{ client_keys_path }} "
+
+- name: Client - copy ta.key to client files
+  shell:
+    cmd: "cp {{ ta_key_file }} {{ client_keys_path }} "
+
+...

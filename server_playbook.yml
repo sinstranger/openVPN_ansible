@@ -1,0 +1,18 @@
+---
+# Run this playbook first to create openvpn server and CA on the single machine
+
+- hosts: all
+  vars_files:
+    - open_vpn_server.vars.yml
+  become: true
+  tasks:
+    - import_tasks: tasks/preparation.tasks.yml
+    - import_tasks: tasks/net.tasks.yml
+    - import_tasks: tasks/ca_pki.tasks.yml
+    - import_tasks: tasks/server_pki.tasks.yml
+    - import_tasks: tasks/server_registration.tasks.yml
+    - import_tasks: tasks/server_gathering_files.tasks.yml
+    - import_tasks: tasks/systemd.tasks.yml
+    - import_tasks: tasks/client_infrastructure.tasks.yml
+
+...

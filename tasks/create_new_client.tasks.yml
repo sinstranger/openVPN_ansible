@@ -1,0 +1,38 @@
+---
+
+- name: Create key and request
+  shell:
+    cmd: "./easyrsa gen-req {{ client_name }} nopass"
+    chdir: "{{ openvpn_server_path }}/easy-rsa-master/easyrsa3"
+  environment:
+    EASYRSA_BATCH: 1
+
+- name: Import client request to CA
+  shell:
+    cmd: "./easyrsa import-req {{ new_client_request }} {{ client_name }}"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+
+- name: Sign request, create client certificate
+  shell:
+    cmd: "./easyrsa sign-req client {{ client_name }}"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  environment:
+    EASYRSA_BATCH: 1
+
+- name: Copy client key and cert to clients keys directory
+  shell:
+    cmd: "cp {{ item }} {{ client_keys_path }}"
+  loop:
+    - "{{ new_client_key }}"
+    - "{{ new_client_cert }}"
+
+- name: Make client config
+  shell:
+    cmd: "{{ make_config_script }} {{ client_name }}"
+
+- name: Copy config from remote
+  fetch:
+    src: "{{ new_client_config_file }}"
+    dest: client_configs_from_remote/
+
+...

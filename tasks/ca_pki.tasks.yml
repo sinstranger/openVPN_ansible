@@ -1,0 +1,50 @@
+---
+
+- name: CA - Create CA directory
+  file:
+    path: "{{ openvpn_ca_path }}"
+    state: directory
+    mode: 0755
+
+- name: CA - Unarchive easy-rsa
+  unarchive:
+    src: "{{ easy_rsa_origin_file }}"
+    dest: "{{ openvpn_ca_path }}"
+    remote_src: yes
+
+- name: CA - Check is Publick Key Infrastructure (PKI) exist
+  stat:
+    path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki"
+  register: pki_folder
+
+- name: CA - Create publick keys infrastructure
+  shell:
+    cmd: "./easyrsa init-pki"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  when: pki_folder.stat.isdir is not defined
+
+- name: CA - Check is CA already built
+  stat:
+    path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/ca.crt"
+  register: ca_certificate
+
+- name: CA - Create Certification authority (CA)
+  shell:
+    cmd: "./easyrsa build-ca nopass"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  environment:
+    EASYRSA_BATCH: 1
+  when: ca_certificate.stat.isreg is not defined
+
+- name: CA - Check is CRL already generated
+  stat:
+    path: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3/pki/crl.pem"
+  register: crl
+
+- name: CA - Create Certificate Revocation List (CRL)
+  shell:
+    cmd: "./easyrsa gen-crl"
+    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+  when: crl.stat.isreg is not defined
+
+...

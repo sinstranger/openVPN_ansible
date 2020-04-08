@@ -1,0 +1,39 @@
+---
+
+- name: Set ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Create before.rules file, enable masquerading
+  template:
+    src: templates/before.rules.j2
+    dest:  /etc/ufw/before.rules
+    mode: '0755'
+
+- name: Change DEFAULT FORWARD POLICY
+  ufw:
+    direction: routed
+    default: allow
+    route: yes
+
+- name: Allow SSH
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Allow all access to port 443
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
+- name: Reload UFW
+  ufw:
+    state: reloaded
+
+...

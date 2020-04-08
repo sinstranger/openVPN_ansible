@@ -1,0 +1,13 @@
+---
+# Run this playbook to revoke client certificate by client name
+# to pass client name run command:
+# ansible-playbook revoke_client_playbook.yml --extra-vars "client_name=< client_name >"
+
+- hosts: all
+  vars_files:
+    - open_vpn_server.vars.yml
+  become: true
+  tasks:
+    - import_tasks: tasks/revoke_cert.tasks.yml
+
+...
