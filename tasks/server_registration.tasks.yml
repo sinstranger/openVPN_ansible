@@ -2,13 +2,13 @@
 
 - name: Check is server alredy registered in CA
   stat:
-    path: "{{ openvpn_server_pki_path }}/reqs/vpn-server.req"
+    path: "{{ openvpn_ca_pki_path }}/reqs/{{ openvpn_server_name }}.req"
   register: server_registered
 
 - name: Register server in CA
   shell:
     cmd: "./easyrsa import-req {{ openvpn_server_request_file_path }} {{ openvpn_server_name }}"
-    chdir: "{{ openvpn_server_easyrsa_path }}"
+    chdir: "{{ openvpn_ca_easyrsa_path }}"
   when: server_registered.stat.isreg is not defined
 
 - name: Check is cert request already signed
