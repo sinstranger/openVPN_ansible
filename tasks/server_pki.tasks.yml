@@ -1,5 +1,17 @@
 ---
 
+- name: Server - Create log directory
+  file:
+    path: /var/log/openvpn
+    state: directory
+    mode: 0755
+
+- name: Server - Create users configuration directory
+  file:
+    path: /etc/openvpn/ccd
+    state: directory
+    mode: 0755
+
 - name: Server - Create openVPN server directory
   file:
     path: "{{ openvpn_server_path }}"

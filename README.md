@@ -10,7 +10,7 @@
 `asible-playbook server_playbook`
 
 Для регистрации нового пользователя по имени:  
-`ansible-playbook create_client_playbook.yml --extra-vars "client_name=<client_name>`
+`ansible-playbook create_client_playbook.yml --extra-vars "client_name=<client_name>"`
 
 Для отзыва сертификата пользователя по имени:  
 `ansible-playbook revoke_client_playbook.yml --extra-vars "client_name=<client_name>"`
