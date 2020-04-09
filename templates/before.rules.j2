@@ -12,7 +12,7 @@
 # NAT table rules
 *nat
 :POSTROUTING ACCEPT [0:0]
-# Allow traffic from OpenVPN client to {{ ansible_default_ipv4.interface }} (change to the interface you discovered!)
+# Allow traffic from OpenVPN client to {{ ansible_default_ipv4.interface }}
 -A POSTROUTING -s 10.8.0.0/8 -o {{ ansible_default_ipv4.interface }} -j MASQUERADE
 COMMIT
 # END OPENVPN RULES
