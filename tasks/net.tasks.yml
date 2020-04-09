@@ -26,14 +26,10 @@
     port: ssh
     proto: tcp
 
-- name: Allow all access to port 443
+- name: Allow tcp access to port 443
   ufw:
     rule: allow
     port: '443'
     proto: tcp
-
-- name: Reload UFW
-  ufw:
-    state: reloaded
 
 ...

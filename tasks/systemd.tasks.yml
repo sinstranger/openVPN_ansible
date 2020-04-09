@@ -7,11 +7,8 @@
     name: openvpn@server
     daemon_reload: yes
 
-- name: Restart UFW server
-  systemd:
-    enabled: yes
-    state: restarted
-    name: ufw
-    daemon_reload: yes
+- name: Enable UFW
+  shell:
+    cmd: ufw --force enable
 
 ...
