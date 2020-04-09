@@ -6,6 +6,7 @@
       - zip
       - openvpn
       - ufw
+    update_cache: yes
 
 - name: Create easy-rsa origin directory
   file:
