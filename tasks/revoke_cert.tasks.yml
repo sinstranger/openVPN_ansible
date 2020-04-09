@@ -3,14 +3,14 @@
 - name: Revoke cert by client name
   shell:
     cmd: "./easyrsa revoke {{ client_name }}"
-    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+    chdir: "{{ openvpn_ca_easyrsa_path }}"
   environment:
     EASYRSA_BATCH: 1
 
 - name: Generate new crl.pem
   shell:
     cmd: "./easyrsa gen-crl"
-    chdir: "{{ openvpn_ca_path }}/easy-rsa-master/easyrsa3"
+    chdir: "{{ openvpn_ca_easyrsa_path }}"
 
 - name: Copy new crl.pem to daemon path
   shell:
