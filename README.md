@@ -7,7 +7,7 @@
 Перед запуском скопировать ip адрес сервера в hosts.yml
 
 Для запуска сценария построения VPN сервера и цетра сертификации:  
-`asible-playbook create_ca_and_server.yml`
+`ansible-playbook create_ca_and_server.yml`
 
 Для регистрации нового пользователя по имени:  
 `ansible-playbook create_client.yml --extra-vars "client_name=<client_name>"`
