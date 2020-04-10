@@ -4,16 +4,16 @@
 ##### Запуск сервера
 
 Тестировалось на VPS с ОС ubuntu 18.04 и Debian 9  
-Перед запуском скопировать ip адрес сервера в hosts.txt
+Перед запуском скопировать ip адрес сервера в hosts.yml
 
 Для запуска сценария построения VPN сервера и цетра сертификации:  
-`asible-playbook server_playbook`
+`asible-playbook create_ca_and_server.yml`
 
 Для регистрации нового пользователя по имени:  
-`ansible-playbook create_client_playbook.yml --extra-vars "client_name=<client_name>"`
+`ansible-playbook create_client.yml --extra-vars "client_name=<client_name>"`
 
 Для отзыва сертификата пользователя по имени:  
-`ansible-playbook revoke_client_playbook.yml --extra-vars "client_name=<client_name>"`
+`ansible-playbook revoke_client.yml --extra-vars "client_name=<client_name>"`
 
 ##### Запуск VPN на клиенте
 
